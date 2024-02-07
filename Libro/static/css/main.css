@@ -1,0 +1,766 @@
+/* Financiamiento: Adjetiva Editorial <https://adjetiva.mx>
+ * Autor: Perro Tuerto, integrante de Programando LIBREros
+ * Licencia: GPLv3
+ * Contacto: hi@programando.li
+ */
+
+/* Inicia reseteador CSS
+ *
+ * El reseteador es para poder tener más control sobre
+ * los estilos porque elimina las inconsistencias de
+ * los estilos por defecto de cada dispositivo.
+ * Cfr: http://meyerweb.com/eric/tools/css/reset
+ */
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  font-family: "Alegreya Regular", Georgia, serif;
+  vertical-align: baseline;
+}
+
+/* Para viejos dispositivos */
+
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+body {
+  line-height: 1.5;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote::before, blockquote::after,
+q::before, q::after {
+  content: '';
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* Termina reseteador CSS */
+
+/* Tamaño de fuente por defecto
+ *
+ * El tamaño de fuente se le deja al dispositivo
+ * para evitar conflictos, aquí se especifica que
+ * el tamaño por defecto corresponde al 100% del
+ * tamaño asignado por el dispositivo, el cual puede
+ * ser de 14 o 16px.
+ * Cfr. https://stackoverflow.com/a/19504121
+ */
+
+html, body {
+  font-size: 100%;
+}
+
+/* Variables
+ *
+ * Las variables sirven para poder reutilizar los valores
+ * en el resto del documento. Esto permite hacer cambios
+ * generales sin tener que revisar todo el CSS.
+ *
+ * Sin embargo, gracias a que Kindle no soporta variables,
+ * estas han quedado deshabilitadas y puestas hardcoded en
+ * el CSS, ¡gracias Amazon!
+ */
+
+:root {
+  --light-gray: #d9d9d9;
+  --indent: 1.5rem;
+  --outdent: -1.5rem;
+  --double-indent: 3rem;
+  --font-size: 1rem;
+  --font-size-small: .85rem;
+  --font-size-reversed: -1rem;
+  --font-default-r: "Alegreya Regular", Georgia, serif;
+  --font-default-i: "Alegreya Italic", Georgia, serif;
+  --font-default-b: "Alegreya Bold", Georgia, serif;
+  --font-default-bi: "Alegreya BoldItalic", Georgia, serif;
+}
+
+/* Nota sobre la unidad rem
+ *
+ * La unidad rem es una unidad relativa a la longitud
+ * de otra medida. Para el caso de rem, la longitud
+ * relativa corresponde al tamaño de fuente del elemento
+ * raíz. Para este caso, le estamos indicando que el tamaño
+ * de fuente es 1 rem, lo que es igual al 100% del tamaño
+ * de fuente del html o body.
+ * Cfr. https://www.w3schools.com/CSSref/css_units.asp
+ * Cfr. https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Values_and_units
+ *
+ * La unidad rem es una unidad influenciada por la unidad
+ * em. La unidad em es una unidad tipográfica relativa al
+ * espesor de la letra M, que por lo general es equivalente
+ * al tamaño de punto. La unidad rem toma en cuenta este
+ * carácter relativo pero para el tamaño de fuente de la
+ * raíz del documento, algo que no tiene comparación en
+ * la tipografía para impresos. En el contexto digital, el
+ * em se deja al tamaño relativo al elemento padre.
+ * Cfr. https://es.wikipedia.org/wiki/Em_(tipograf%C3%ADa)
+ *
+ * Este ejemplo muestra la diferencia entre rem y em:
+ * - Raíz: 1rem o 1em = 16px
+ * -- Hijo A: .75rem o .75em = 12px
+ * --- Nieto B: .75rem = 12px y .75em = 9px
+ *
+ * Como puede observarse, la unidad em puede prestarse a
+ * confusiones en este contexto. Así que para eliminar
+ * ambigüedades aquí solo se usa rem, donde
+ * 1rem = 100% tamaño de fuente del html o body.
+ */
+
+/* Fuentes */
+
+@font-face {
+  font-family: "Alegreya Regular";
+  src: url(../fonts/alegreya-regular.ttf);
+}
+
+@font-face {
+  font-family: "Alegreya Italic";
+  src: url(../fonts/alegreya-italic.ttf);
+}
+
+@font-face {
+  font-family: "Alegreya Bold";
+  src: url(../fonts/alegreya-bold.ttf);
+}
+
+@font-face {
+  font-family: "Alegreya BoldItalic";
+  src: url(../fonts/alegreya-bolditalic.ttf);
+}
+
+/* Fuente y alineación por defecto */
+
+* {
+  font-size: 1rem;
+  line-height: 1.15rem;
+  text-align: left;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  -o-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+}
+
+/* Tabla de contenidos */
+
+ol.toc {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+ol.toc li {
+  margin: 0;
+  padding: 0 1rem;
+}
+
+ol.toc br {
+  display: none;
+}
+
+/* Muesta elementos deseables */
+#toc:before {
+  content: "Índice";
+  display: block;
+  /* Resto de los contenidos igual a h1, véase abajo */
+}
+
+/* Oculta elementos indeseables */
+#toc-title, #landmarks {
+  display: none;
+}
+
+/* Estilos de secciones */
+
+/* EpubCheck no acepta varios parámetros en :not, por eso la repetición */
+section + section:not(.footnotes):not(.level2):not(.level3):not(.level4):not(.level5):not(.level6) {
+  margin-top: 3rem;
+  padding-top: 3rem;
+  border-top: 3px double #d9d9d9;
+}
+
+section#cover-image {
+  width: 50%;
+  margin: auto;
+}
+
+/* Estilos de encabezados */
+
+h1, h2, h3, h4, h5, h6, #toc:before {
+  font-family: "Alegreya Regular", Georgia, serif;
+  font-size: 1.5rem; /* 1/2 más al tamaño por defecto */
+  text-align: center;
+  font-weight: normal; /* Por defecto Kindle pone negritas */
+  font-style: normal;  /* Evita estilos por defecto */
+  -moz-hyphens: none !important;
+  -webkit-hyphens: none !important;
+  -o-hyphens: none !important;
+  -ms-hyphens: none !important;
+  hyphens: none !important;
+}
+
+h1, #toc:before {
+  margin-bottom: 3rem;
+}
+
+* + h1 {
+  margin-top: 3rem;
+  padding-top: 3rem;
+  border-top: 3px double #d9d9d9;
+}
+
+h2, h3, h4, h5, h6 {
+  margin: 1.5rem auto;
+}
+
+h3, h5 {
+  font-family: "Alegreya Italic", Georgia, serif;
+}
+
+h4, h5, h6 {
+  text-align: left;
+}
+
+h4, h5 {
+  font-size: 1.33rem; /* 1/3 más al tamaño por defecto */
+}
+
+h6 {
+  font-size: 1rem;
+  font-family: "Alegreya Bold", Georgia, serif;
+}
+
+/* Estilos de párrafos */
+
+p + p {
+  text-indent: 1.5rem;
+}
+
+blockquote {
+  margin: 1rem 0 1rem 1.5rem;
+}
+
+blockquote + blockquote {
+  text-indent: 1.5rem;
+  margin-top: -1rem;
+}
+
+div.primer-parrafo + p, div.sin-sangria + p {
+  text-indent: 1.5rem;
+}
+
+div.sangria {
+  text-indent: 1.5rem;
+}
+
+div.derecha, div.justificado, div.centrado, div.frances,
+div.epigrafe, div.bib, div.recuadro, div.legal,
+div.colofon {
+  margin: 1rem 0;
+}
+
+div.derecha > * {
+  text-align: right;
+}
+
+div.justificado > * {
+  text-align: justify;
+}
+
+div.centrado > *, div.colofon > * {
+  text-align: center;
+}
+
+div.frances > * {
+  margin-left: 1.5rem;
+  text-indent: -1.5rem;
+}
+
+div.frances p + p {
+  text-indent: -1.5rem;
+}
+
+div.epigrafe > * {
+  text-align: right;
+  margin: 1rem 0 1rem 3rem;
+}
+
+div.recuadro {
+  padding: 1.5rem;
+  background-color: #d9d9d9;
+  color: black;
+}
+
+div.legal,
+div.colofon {
+  font-size: .85rem;
+}
+
+div.legal > *, div.colofon > * {
+  text-indent: 0;
+  margin-top: 1rem;
+}
+
+div.colofon {
+  margin: 3rem;
+  padding: 3rem 0;
+  border-top: 1px solid #d9d9d9;
+}
+
+div.note, div.warn, div.error {
+  margin: 1rem 0;
+  padding: 1rem;
+  border-radius: .25rem;
+  border: 1px solid transparent;
+  color: #31708f;
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+}
+
+div.warn {
+  color: #8a6d3b;
+  background-color: #fcf8e3;
+  border-color: #faebcc;
+}
+
+div.error {
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+}
+
+div.note:before, div.warn:before, div.error:before {
+  content: "📌";
+  display: block;
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+div.warn:before {
+  content: "⚠️";
+}
+
+div.error:before {
+  content: "⛔";
+}
+
+figure {
+  margin: 1rem 0;
+}
+
+img:not(.math) {
+  display: block;
+  margin: auto;
+  /* 100% al tamaño relativo de la caja */
+  max-width: 100%;
+  /* Ayuda a detectar si no existe el recurso */
+  color: red;
+}
+
+figcaption {
+  margin: .5rem 1.5rem 1rem 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #d9d9d9;
+}
+
+figcaption::before {
+	content: "⬛";
+	padding-right: .7rem;
+	font-size: .6rem;
+	vertical-align: 2px;
+	text-shadow: 2px 2px #d9d9d9;
+	display: inline-block;
+}
+
+ul, ol {
+  list-style-type: none;
+}
+
+ul {
+  margin: 1rem 0;
+  padding-left: .5rem;
+}
+
+/* Para Kindle */
+@media amzn-mobi, amzn-kf8 {
+  ul {
+    list-style-type: disc;
+  }
+}
+
+li::marker {
+  font-family: "Alegreya Bold", Georgia, serif;
+}
+
+ul li {
+  padding-left: .5rem;
+}
+
+ul li::marker {
+  content: "◆";
+}
+
+/* Lista anidada */
+li ul {
+  margin: 0;
+}
+
+/* Marcador en lista anidada */
+li ul li::marker {
+  content: "◇";
+}
+
+ol {
+  list-style-type: decimal;
+  margin: 1rem 0 1rem 1.5rem;
+}
+
+ol li {
+  padding-left: .25rem;
+}
+
+/* Lista anidada */
+li ol {
+  margin: 0;
+  padding-left: .9rem;
+}
+
+table {
+  margin: 1rem auto;
+}
+
+thead {
+	border: 1px solid black;
+	border-left: none;
+	border-right: none;
+  /* Permite ver una línea divisoria abajo en
+   * dispositivos con fondo negro */
+  box-shadow: 0 2px white;
+}
+
+thead tr {
+  /* Permite ver una línea divisoria arriba en
+   * dispositivos con fondo negro */
+  box-shadow: 0 -1px white;
+}
+
+th {
+  font-family: "Alegreya Italic", Georgia, serif;
+  /* .5rem que al pegarse son el tamaño por defecto */
+  padding: 0 .5rem;
+}
+
+tr.even {
+  background-color: #d9d9d9;
+  color: black;
+}
+
+hr {
+  height: 0;
+  border: 0;
+  border-top: 3px solid #d9d9d9;
+}
+
+.bib ol {
+  margin: 0 0 0 1.5rem;
+}
+
+.bib li {
+  padding-left: .5rem;
+}
+
+.bib-raya ul {
+  margin: 0 0 0 2.4rem;
+}
+
+.bib-raya li::marker {
+  content: "―";
+}
+
+.footnotes li {
+  padding-left: .5rem;
+}
+
+.display.math {
+  display: flex;
+  width: fit-content;
+  background-color: white;
+}
+
+/* Para Kindle */
+@media amzn-mobi, amzn-kf8 {
+  .display.math {
+    display: block;
+    width: 50%;
+    background-color: white;
+    margin: auto;
+  }
+}
+
+.oculto:not(section) {
+  display: none;
+} 
+
+/* Espaciados */
+
+/* Genera espacio de una línea arriba y abajo
+ * Si está vacío, añade una línea adicional (3 espacios)
+ */
+div.espacios {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  min-height: 1rem;
+}
+
+/* Genera espacio de una línea arriba
+ * Si está vacío, añade una línea adicional (2 espacios)
+ */
+div.espacio-arriba {
+  margin-top: 1rem;
+  min-height: 1rem;
+}
+
+div.espacio-arriba + p {
+  text-indent: 1.5rem;
+}
+
+/* Genera espacio de una línea abajo
+ * Si está vacío, añade una línea adicional (2 espacios)
+ */
+div.espacio-abajo {
+  margin-bottom: 1rem;
+  min-height: 1rem;
+}
+
+/* Genera espacio de una línea arriba
+ * Si está vacío, permanece sin cambios (1 espacios)
+ */
+div.espacio-sencillo {
+  margin-top: 1rem;
+}
+
+/* Eliminan espacios arriba y abajo */
+div.sin-espacios {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* Eliminan espacios arriba */
+div.sin-espacio-arriba {
+  margin-top: 0;
+}
+
+/* Eliminan espacios abajo */
+div.sin-espacio-abajo {
+  margin-bottom: 0;
+}
+
+/* Estilos de carácter */
+
+i, em {
+  font-family: "Alegreya Italic", Georgia, serif;
+  font-style: normal;  /* Por defecto Kindle pone negritas */
+  font-weight: normal; /* Evita estilos por defecto */
+}
+
+b, strong {
+  font-family: "Alegreya Bold", Georgia, serif;
+  font-weight: normal; /* Por defecto Kindle pone negritas */
+  font-style: normal;  /* Evita estilos por defecto */
+}
+
+i > b, b > i,
+em > strong, strong > em,
+i > strong, strong > i,
+em > b, b > em {
+  font-family: "Alegreya BoldItalic", Georgia, serif;
+}
+
+a, a:link, a:visited {
+  text-decoration: none;
+}
+
+sup, sub {
+  font-size: .85rem;
+  vertical-align: top;
+}
+
+sub {
+  vertical-align: bottom;
+}
+
+p > img:not(.math), li > img:not(.math) {
+  display: inline;
+  height: 1rem;
+  width: auto;
+}
+
+/* Fragmentos de código
+ * inspirados en https://codepen.io/elomatreb/pen/hbgxp)
+ */
+
+code, code * {
+  font-family: "Courier New", Courier, monospace !important;
+  font-size: .75rem;
+  color: black;
+}
+
+code {
+  background-color: #fff;
+  padding: .125rem .5rem;
+  border: 1px solid #ddd;
+  border-radius: .25rem;
+  -moz-hyphens: none;
+  -webkit-hyphens: none;
+  -o-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+pre {
+  width: 90%;
+  background-color: #fff;
+  margin: 1rem auto !important;
+  padding: .5rem;
+  line-height: 1;
+  border-radius: .25rem;
+  box-shadow: .1rem .1rem .5rem rgba(0,0,0,.45);
+  white-space: unset;
+}
+
+pre code {
+  display: block;
+  margin: 0;
+  padding: 0;
+  background-color: inherit;
+  border: none;
+  border-radius: 0;
+}
+
+pre code.sourceCode a:before {
+  display: inline-block;
+  width: 1rem;
+  text-align: right;
+  border-right: 1px solid #ddd;
+  padding: 0 .5rem;
+  margin-right: .5rem;
+  text-decoration: none !important;
+}
+
+@media not amzn-mobi, not amzn-kf8 {
+  pre code.sourceCode {
+    counter-reset: line;
+    overflow-x: scroll;
+  }
+
+  pre code.sourceCode a:before {
+    counter-increment: line;
+    content: counter(line);
+  }
+
+  pre code.sourceCode a {
+    white-space: pre;
+    text-decoration: none !important;
+  }
+}
+
+@media amzn-mobi, amzn-kf8 {
+  pre code.sourceCode a:before {
+    content: "•";
+  }
+}
+
+/* Capitular solo si el dispositivo soporta 'float' */
+@supports (float: left) {
+  .capitular {
+    float: left;
+    font-size: 3.3rem;
+    margin-right: .25rem;
+    line-height: 3rem;
+  }
+}
+
+/* Para Kindle */
+@media amzn-kf8 {
+  .capitular {
+    font-weight: normal;
+    font-size: 210%;
+    float: left;
+    margin-top: -0.3225rem;
+    margin-bottom: -0.3245rem;
+  }
+}
+
+/* Para Kindle */
+@media amzn-mobi {
+  .capitular {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+}
+
+.versal {
+  text-transform: uppercase;
+}
+
+.versalita {
+  font-variant: small-caps;
+}
+
+.versalita-todo, .acronimo {
+  font-variant: all-small-caps;
+}
+
+.resaltado {
+  background-color: #d9d9d9;
+  color: black;
+}
+
+.resaltado-fuerte {
+  background-color: black;
+  color: white;
+}
+
+.footnote-ref {
+  font-family: "Alegreya Bold", Georgia, serif;
+  font-size: .85rem;
+  vertical-align: top;
+}
+
+.inline.math, .inline.math > img {
+  display: inline;
+  width: auto;
+  height: 1rem;
+  background-color: white;
+}

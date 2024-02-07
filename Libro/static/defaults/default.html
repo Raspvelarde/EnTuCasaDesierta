@@ -1,0 +1,23 @@
+# Configuración para exportación Markdown --> HTML
+# Para ver más opciones de exportación visita:
+# https://pandoc.org/MANUAL.html?pandocs-markdown#defaults-files
+reader: markdown
+writer: html
+verbosity: INFO
+log-file: log.html.txt
+embed-resources: true
+file-scope: true
+number-sections: false
+toc: true
+dpi: 150
+html-math-method:
+  method: webtex
+  url: https://latex.codecogs.com/svg.latex?
+template: static/templates/template.html.html
+metadata-files:
+- metadata.yaml
+css: 
+- static/css/main.css
+filters:
+- type: citeproc
+- static/filters/pecas.lua

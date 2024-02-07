@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops"$if(lang)$ xml:lang="$lang$"$endif$>
+<head>
+  <meta charset="utf-8" />
+  <title>$pagetitle$</title>
+  <style>
+    $styles.html()$
+    $if(highlighting-css)$
+      $highlighting-css$
+    $endif$
+  </style>
+  $for(css)$
+    <link rel="stylesheet" type="text/css" href="$css$" />
+  $endfor$
+  $for(header-includes)$
+    $header-includes$
+  $endfor$
+</head>
+<body $if(coverpage)$ id="cover" $endif$
+      $if(body-type)$ epub:type="$body-type$" $endif$ >
+  $if(titlepage)$
+    $if(in-epub.rights)$
+      <section id="copyright-page" epub:type="copyright-page">
+  <div class="legal">
+    $if(original-title)$
+      <p id="original-title">
+        $if(original-title-name)$ $original-title-name$: $endif$
+        <i id="original-title">$original-title$</i>
+      </p>
+    $endif$
+    $if(title)$ 
+      <p id="regular-title">
+        <i id="title">$title$</i>$if(subtitle)$. <i id="subtitle">$subtitle$</i> $endif$
+      </p>
+    $endif$
+    $if(editions)$
+      <p id="editions">
+        $for(editions)$ $editions$ <br/> $endfor$
+      </p>
+    $endif$
+    $if(rights)$ <p id="rights"> $rights$ <br/></p> $endif$
+    $if(directory)$
+      <p id="directory">
+        $if(directory-name)$ $directory-name$ <br/> $endif$
+        $for(directory)$ $directory$ <br/> $endfor$
+      </p>
+    $endif$
+    $if(address)$
+      <p id="address">
+        $if(publisher)$ D. R. © $year$ $publisher$$if(license)$, $license$ $endif$ <br/> $endif$
+        $for(address)$ $address$ <br/> $endfor$
+      </p>
+    $endif$
+    $if(rights-notice)$
+      <p id="rights-notice">
+        $for(rights-notice)$ $rights-notice$ <br/> $endfor$
+      </p>
+    $endif$
+    $if(isbn)$ 
+      <p id="isbn">
+      $if(isbn.print)$ 
+        <span class="isbn"><span class="acronimo">ISBN</span>: $isbn.print$ (<i>impreso</i>)</span>
+      $endif$
+      $if(isbn.ebook)$ 
+        <span class="isbn"><span class="acronimo">ISBN</span>: $isbn.ebook$ (<i>digital</i>)</span>
+      $endif$
+      $if(isbn.web)$ 
+        <span class="isbn"><span class="acronimo">ISBN</span>: $isbn.web$ (<i>web</i>)</span>
+      $endif$
+      </p>
+    $endif$
+    $if(made-in)$ <p id="made-in"> $made-in$ </p> $endif$
+  </div>
+</section>
+
+    $endif$
+  $else$
+    $for(include-before)$
+      $include-before$
+    $endfor$
+    $body$
+    $for(include-after)$
+      $include-after$
+    $endfor$
+  $endif$
+</body>
+</html>
