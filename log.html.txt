@@ -1,0 +1,136 @@
+[
+    {
+        "type": "LoadedResource",
+        "verbosity": "INFO",
+        "for": "static/templates/template.html.html",
+        "from": "static/templates/template.html.html"
+    },
+    {
+        "type": "RunningFilter",
+        "verbosity": "INFO",
+        "path": "citeproc"
+    },
+    {
+        "type": "FilterCompleted",
+        "verbosity": "INFO",
+        "path": "citeproc",
+        "milliseconds": "0"
+    },
+    {
+        "type": "RunningFilter",
+        "verbosity": "INFO",
+        "path": "static/filters/pecas.lua"
+    },
+    {
+        "type": "FilterCompleted",
+        "verbosity": "INFO",
+        "path": "static/filters/pecas.lua",
+        "milliseconds": "0"
+    },
+    {
+        "type": "RunningFilter",
+        "verbosity": "INFO",
+        "path": "C:\\Users\\Alber\\AppData\\Roaming\\Zettlr\\lua-filter\\links.lua"
+    },
+    {
+        "type": "FilterCompleted",
+        "verbosity": "INFO",
+        "path": "C:\\Users\\Alber\\AppData\\Roaming\\Zettlr\\lua-filter\\links.lua",
+        "milliseconds": "93"
+    },
+    {
+        "type": "RunningFilter",
+        "verbosity": "INFO",
+        "path": "C:\\Users\\Alber\\AppData\\Roaming\\Zettlr\\lua-filter\\tags.lua"
+    },
+    {
+        "type": "FilterCompleted",
+        "verbosity": "INFO",
+        "path": "C:\\Users\\Alber\\AppData\\Roaming\\Zettlr\\lua-filter\\tags.lua",
+        "milliseconds": "46"
+    },
+    {
+        "type": "InlineNotRendered",
+        "verbosity": "INFO",
+        "contents": {
+            "c": [
+                "tex",
+                "\\ras "
+            ],
+            "t": "RawInline"
+        }
+    },
+    {
+        "type": "InlineNotRendered",
+        "verbosity": "INFO",
+        "contents": {
+            "c": [
+                "tex",
+                "\\una "
+            ],
+            "t": "RawInline"
+        }
+    },
+    {
+        "type": "InlineNotRendered",
+        "verbosity": "INFO",
+        "contents": {
+            "c": [
+                "tex",
+                "\\s "
+            ],
+            "t": "RawInline"
+        }
+    },
+    {
+        "type": "LoadedResource",
+        "verbosity": "INFO",
+        "for": "static/css/main.css",
+        "from": "static/css/main.css"
+    },
+    {
+        "type": "LoadedResource",
+        "verbosity": "INFO",
+        "for": "static/css\\../fonts/alegreya-regular.ttf",
+        "from": "static/css\\../fonts/alegreya-regular.ttf"
+    },
+    {
+        "type": "LoadedResource",
+        "verbosity": "INFO",
+        "for": "static/css\\../fonts/alegreya-italic.ttf",
+        "from": "static/css\\../fonts/alegreya-italic.ttf"
+    },
+    {
+        "type": "LoadedResource",
+        "verbosity": "INFO",
+        "for": "static/css\\../fonts/alegreya-bold.ttf",
+        "from": "static/css\\../fonts/alegreya-bold.ttf"
+    },
+    {
+        "type": "LoadedResource",
+        "verbosity": "INFO",
+        "for": "static/css\\../fonts/alegreya-bolditalic.ttf",
+        "from": "static/css\\../fonts/alegreya-bolditalic.ttf"
+    },
+    {
+        "type": "Fetching",
+        "verbosity": "INFO",
+        "path": "https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.3.1/anchor.min.js"
+    },
+    {
+        "type": "Fetching",
+        "verbosity": "INFO",
+        "path": "https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.18.2/tocbot.min.js"
+    },
+    {
+        "type": "Fetching",
+        "verbosity": "INFO",
+        "path": "https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.18.2/tocbot.min.css"
+    },
+    {
+        "type": "LoadedResource",
+        "verbosity": "INFO",
+        "for": "static/img/portada.jpg",
+        "from": "static/img/portada.jpg"
+    }
+]

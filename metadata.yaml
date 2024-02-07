@@ -1,0 +1,41 @@
+---
+# Metadatos del libro
+# Para ver más sobre los metadatos, visita:
+# Cfr. https://pandoc.org/MANUAL.html?pandocs-markdown#epubs
+# Inicia información para EPUB y HTML
+# OJO: en Zettlr 'title' es ignorado y en su lugar es el título del proyecto
+lang: es
+# Los roles son los 'relators' de MARC en bajas y con guion en lugar de espacio
+# Cfr. https://id.loc.gov/vocabulary/relators.html
+creator:
+- role: author
+  text: Raspvelarde PI
+- role: editor
+  text: Albero Tagle
+- role: cover-designer
+  text: Copilot
+cover-image: static/img/portada.jpg
+ibooks:
+  specified-fonts: true
+in-html: 
+  cover: true
+  rights: true
+  toc: true
+in-epub:
+  rights: true
+  toc: true
+# Termina información para EPUB y HTML
+# Inicia información para la página legal 
+made-in: 'Hecho en México · <i>Made in Mexico</i>'
+rights-notice: 
+- Se permite la reproducción total o parcial de esta obra, sea cual fuere el medio, sin la anuencia por escrito del titular de los derechos y en conformidad a la licencia de uso.
+license: CC BY-NC
+year: 2024
+directory-name: Directorio
+directory:
+- 'Autor: Raspvelarde Pi'
+- 'Editor: Alberto Tagle'
+- 'Diseño de portada: Copilot'
+editions:
+- Primera edición, 2024
+---

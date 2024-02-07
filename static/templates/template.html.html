@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="$lang$" xml:lang="$lang$"$if(dir)$ dir="$dir$"$endif$
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  $if(keywords)$
+    <meta name="keywords" content="$for(keywords)$$keywords$$sep$, $endfor$" />
+  $endif$
+  $if(description)$
+    <meta name="description" content="$description$" />
+  $endif$
+  <title>$pagetitle$</title>
+  <style>
+    $styles.html()$
+    $if(highlighting-css)$
+      $highlighting-css$
+    $endif$
+  </style>
+  $if(favicon)$
+    <link rel="shortcut icon" href="$favicon$">
+  $endif$
+  $for(css)$
+    <link rel="stylesheet" type="text/css" href="$css$" />
+  $endfor$
+  $for(header-includes)$
+    $header-includes$
+  $endfor$
+  <!-- Anclajes en encabezados: https://www.bryanbraun.com/anchorjs -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.3.1/anchor.min.js"></script>
+  <!-- TOC: https://tscanlin.github.io/tocbot -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.18.2/tocbot.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.18.2/tocbot.min.css"/>
+  <!-- Añade el JS y CSS necesario para los anclajes y TOC -->
+  <script>
+    window.onload = () => {
+  // Modifica apertura de enlaces externos
+  modify_a();
+  // El TOC por defecto es para quienes no tienen JS,
+  // cuando hay soporte JS no se necesita ese TOC
+  remove_default_toc();
+  // Añade anclajes a los encabezados
+  add_anchors();
+  // Añade TOC
+  add_toc();
+  // Añade menú
+  add_menu();
+};
+
+// Modifica comportamiento de enlaces
+function modify_a () {
+  modify_a_external();
+  modify_a_internal();
+}
+
+// Modifica comportamiento de enlaces externos
+function modify_a_external () {
+  document.querySelectorAll('a[href*="//"]').forEach((a) => {
+    a.target = '_blank';
+  });
+}
+
+// Modifica comportamiento de enlaces internos
+function modify_a_internal () {
+  document.querySelectorAll('a').forEach((a) => {
+    if (a.target != '_blank') {
+      a.onclick = function(e) {
+        e.preventDefault();
+        let target = this.getAttribute('href');
+        window.scrollTo({
+          top: document.querySelector(target).offsetTop,
+          behavior: "smooth"
+        });
+      };
+    }
+  });
+}
+
+// Elimina TOC por defecto
+function remove_default_toc () {
+  let old_toc = document.getElementById('toc');
+  old_toc.parentNode.removeChild(old_toc);
+}
+
+// Añade iconos de anclaje en encabezados
+function add_anchors () {
+  anchors.options = {
+    placement: 'left',
+    visible: 'touch',
+    icon: '§',
+    class: 'anchor'
+  }
+
+  anchors.add('h1, h2, h3, h4, h5, h6');
+}
+
+// Añade TOC
+function add_toc () {
+  let nav = document.createElement('nav');
+
+  nav.id = 'toc-nav';
+  document.body.prepend(nav);
+
+  tocbot.init({
+    tocSelector: '#toc-nav',
+    contentSelector: '#main',
+    headingSelector: 'h1, h2, h3',
+    ignoreHiddenElements: true,
+    hasInnerContainers: true,
+  });
+}
+
+// Añade menú cuando el TOC no cabe
+function add_menu () {
+  let background = build_menu_item('menu-background'),
+    filler = build_menu_item('menu-filler', background),
+    btn = build_menu_item('menu-btn'),
+    bar3 = build_menu_item('menu-bar3', btn),
+    bar2 = build_menu_item('menu-bar2', btn),
+    bar1 = build_menu_item('menu-bar1', btn);
+
+  // Resiva si tiene touch; cfr. https://stackoverflow.com/a/52855084
+  if(window.matchMedia("(pointer: coarse)").matches) {
+    btn.addEventListener('touchstart', toggle_menu);
+    background.addEventListener('touchstart', toggle_menu);
+  } else {
+    btn.addEventListener('click', toggle_menu);
+    background.addEventListener('click', toggle_menu);
+  }
+
+}
+
+// Construye el elemento del menú
+function build_menu_item (id, parent = document.body) {
+  let item = document.createElement('div');
+  item.id = id;
+  if (parent) {
+    parent.prepend(item);
+  }
+  return item;
+}
+
+// Muestra u oculta el menú
+function toggle_menu () {
+  let ids = ['toc-nav', 'menu-background', 'menu-btn'];
+  ids.forEach((id) => {
+    let item = document.getElementById(id);
+    item.classList.toggle('menu-activo');
+  });
+}
+
+  </script>
+  <style>
+    body {
+  max-width: 35rem; /* Metáfora de 35 letras por línea */
+  margin: auto;     /* El 'auto' le da centrado */
+  padding: 0 2rem;
+}
+
+#menu-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.75);
+  z-index: 1;
+  display: none;
+}
+
+#menu-filler {
+  position: fixed;
+  top: 0;
+  right: 0;
+  /* 18.5rem == #toc-nav.width + 1rem */
+  width: 18.5rem;
+  height: 100%;
+  background: white;
+}
+
+#menu-btn {
+  display: none;
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+  background: white;
+  border: 1px solid #d9d9d9;
+  border-radius: .25rem;
+  z-index: 2;
+}
+
+#menu-bar1, #menu-bar2, #menu-bar3 {
+	display: block;
+	width: 1.5rem;
+	height: 4px;
+	background-color: #d9d9d9;
+	margin: 4px auto;
+	transition: 0.4s;
+}
+
+#menu-bar1 {
+  margin-top: 7px;
+}
+
+#menu-btn.menu-activo #menu-bar1 {
+  -webkit-transform: rotate(-45deg) translate(-9px, 6px);
+  transform: rotate(-45deg) translate(-5px, 5px);
+}
+
+#menu-btn.menu-activo #menu-bar2 {
+  opacity: 0;
+}
+
+#menu-btn.menu-activo #menu-bar3 {
+  -webkit-transform: rotate(45deg) translate(-8px, -8px);
+  transform: rotate(45deg) translate(-6px, -6px);
+}
+
+.menu-activo {
+  display: block !important;
+}
+
+#toc:before {
+  display: none;
+}
+
+#toc-title {
+  display: block;
+}
+
+#toc-nav {
+	transform: translateX(0);
+	position: fixed;
+	top: 3rem;
+  /* 70rem == doble del body
+   * 4rem == doble del padding y margin del body */
+	right: calc((100% - 70rem - 4rem) / 2);
+	width: 17.5rem;
+  /* 8rem == el top + ancho del botón de menú + 2rem de margen del botón */
+	height: calc(100% - 8rem);
+	overflow-y: auto;
+	padding: 0 1rem 1rem 0;
+	background: white;
+  z-index: 3;
+}
+
+#toc-nav ol {
+  position: relative;
+  overflow: hidden;
+	list-style-type: none;
+}
+
+#main {
+  margin-bottom: 3rem;
+}
+
+h1, h2, h3 {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+a.toc-link {
+  display: block;
+  text-indent: -.85rem;
+  margin-left: .85rem;
+}
+
+a.toc-link::before {
+	background-color: #d9d9d9;
+}
+
+a.is-active-link.toc-link::before {
+	background-color: blue;
+}
+
+a.anchor {
+  color: blue; 
+}
+
+span.isbn {
+  display: block;
+}
+
+/* Cuando el TOC ya no cabe */
+@media (max-width: 74rem) {
+
+  #menu-btn {
+    display: block;
+  }
+
+  /* 70rem == doble del body
+   * 4rem == doble del padding y margin del body */
+  #toc-nav {
+    display: none;
+    right: 0;
+  }
+}
+
+/* Cuando la pantalla es pequeña */
+@media screen and (max-width: 480px) {
+
+  /* Muestra la portada en todo el ancho */
+  /* Hace que las figuras abarquen toda la caja */
+  section#cover-image, figure {
+    width: 100vw;
+    margin-left: -2rem;
+  }
+
+  figure img:not(.math), #cover-image img {
+    max-width: 100vw;
+  }
+
+  figcaption {
+    margin-left: 2rem;
+    margin-right: 2rem;
+  }
+}
+
+  </style>
+</head>
+<body>
+  $for(include-before)$
+    $include-before$
+  $endfor$
+  $if(in-html.cover)$
+    <section id="cover-image">
+      <img src="$cover-image$" />
+    </section>
+  $endif$
+  $if(in-html.rights)$
+    <section id="copyright-page" epub:type="copyright-page">
+  <div class="legal">
+    $if(original-title)$
+      <p id="original-title">
+        $if(original-title-name)$ $original-title-name$: $endif$
+        <i id="original-title">$original-title$</i>
+      </p>
+    $endif$
+    $if(title)$ 
+      <p id="regular-title">
+        <i id="title">$title$</i>$if(subtitle)$. <i id="subtitle">$subtitle$</i> $endif$
+      </p>
+    $endif$
+    $if(editions)$
+      <p id="editions">
+        $for(editions)$ $editions$ <br/> $endfor$
+      </p>
+    $endif$
+    $if(rights)$ <p id="rights"> $rights$ <br/></p> $endif$
+    $if(directory)$
+      <p id="directory">
+        $if(directory-name)$ $directory-name$ <br/> $endif$
+        $for(directory)$ $directory$ <br/> $endfor$
+      </p>
+    $endif$
+    $if(address)$
+      <p id="address">
+        $if(publisher)$ D. R. © $year$ $publisher$$if(license)$, $license$ $endif$ <br/> $endif$
+        $for(address)$ $address$ <br/> $endfor$
+      </p>
+    $endif$
+    $if(rights-notice)$
+      <p id="rights-notice">
+        $for(rights-notice)$ $rights-notice$ <br/> $endfor$
+      </p>
+    $endif$
+    $if(isbn)$ 
+      <p id="isbn">
+      $if(isbn.print)$ 
+        <span class="isbn"><span class="acronimo">ISBN</span>: $isbn.print$ (<i>impreso</i>)</span>
+      $endif$
+      $if(isbn.ebook)$ 
+        <span class="isbn"><span class="acronimo">ISBN</span>: $isbn.ebook$ (<i>digital</i>)</span>
+      $endif$
+      $if(isbn.web)$ 
+        <span class="isbn"><span class="acronimo">ISBN</span>: $isbn.web$ (<i>web</i>)</span>
+      $endif$
+      </p>
+    $endif$
+    $if(made-in)$ <p id="made-in"> $made-in$ </p> $endif$
+  </div>
+</section>
+
+  $endif$
+  $if(toc)$
+    <section id="toc" role="doc-toc">
+    <h1 id="toc-title">Índice</h1>
+    $table-of-contents$
+    </section>
+  $endif$
+  <section id="main">
+    $body$
+  </section>
+  $for(include-after)$
+    $include-after$
+  $endfor$
+</body>
+</html>
